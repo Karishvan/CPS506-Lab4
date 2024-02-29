@@ -25,9 +25,10 @@ defmodule Lab4 do
   def filterNestedStrings([h | t], res) when is_bitstring(h), do: filterNestedStrings(t, res)
   def filterNestedStrings([h | t], res), do: filterNestedStrings(t, res ++ [h])
 
-  def tailFib(n) do 
-    :ok
-  end
+  def tailFib(n), do: tailFib(n, 0, 1)
+  def tailFib(0, a, b), do: a
+  def tailFib(1, a, b), do: b
+  def tailFib(n, a, b), do: tailFib(n-1, b, a+b)
   
   def giveChange(n, coins) do 
     :ok
