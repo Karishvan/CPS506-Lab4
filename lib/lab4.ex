@@ -13,7 +13,7 @@ defmodule Lab4 do
   def catNestedStrings([], res), do: res
   def catNestedStrings([h | t], res) when is_list(h), do: catNestedStrings(t, res <> catNestedStrings(h))
   def catNestedStrings([h | t], res) when is_bitstring(h), do: catNestedStrings(t, res <> h)
-  def catNestedStrings([h | t], res), do: catNestedStrings(t, res)
+  def catNestedStrings([_ | t], res), do: catNestedStrings(t, res)
     # cond do
     #   is_bitstring h ->  #Maybe use string.valid but it doesnt work
     #   true -> catNestedStrings(t, res)
@@ -26,22 +26,20 @@ defmodule Lab4 do
   def filterNestedStrings([h | t], res), do: filterNestedStrings(t, res ++ [h])
 
   def tailFib(n), do: tailFib(n, 0, 1)
-  def tailFib(0, a, b), do: a
-  def tailFib(1, a, b), do: b
+  def tailFib(0, a, _), do: a
+  def tailFib(1, _, b), do: b
   def tailFib(n, a, b), do: tailFib(n-1, b, a+b)
   
   def giveChange(n, coins), do: giveChange(n, coins, [])
-  def giveChange(0,coins,res), do: res
-  def giveChange(n, [], res), do: :error
+  def giveChange(0,_,res), do: res
+  def giveChange(_, [], _), do: :error
   def giveChange(n,[h | t],res) when n >= h, do: giveChange(n-h, [h | t], res ++ [h])
-  def giveChange(n, [h | t], res), do: giveChange(n, t, res)
+  def giveChange(n, [_ | t], res), do: giveChange(n, t, res)
     
-  def reduce(items, fun) do 
-    :ok
-  end
-
-  def reduce(items, acc, fun) do 
-    :ok
-  end
+  def reduce([h | t], fun), do: reduce(t, h, fun)
+  def reduce([], acc, _), do: acc
+  def reduce([h | t], acc, fun), do: reduce(t, fun.(h, acc), fun)
+  
+  #def reduce(items, acc, fun), do: reduce()
 
 end
