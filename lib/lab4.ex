@@ -30,9 +30,11 @@ defmodule Lab4 do
   def tailFib(1, a, b), do: b
   def tailFib(n, a, b), do: tailFib(n-1, b, a+b)
   
-  def giveChange(n, coins) do 
-    :ok
-  end
+  def giveChange(n, coins), do: giveChange(n, coins, [])
+  def giveChange(0,coins,res), do: res
+  def giveChange(n, [], res), do: :error
+  def giveChange(n,[h | t],res) when n >= h, do: giveChange(n-h, [h | t], res ++ [h])
+  def giveChange(n, [h | t], res), do: giveChange(n, t, res)
     
   def reduce(items, fun) do 
     :ok
