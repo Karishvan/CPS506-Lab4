@@ -20,10 +20,10 @@ defmodule Lab4 do
     # end 
 
   def filterNestedStrings(items), do: filterNestedStrings(items, [])
-  def filterNestedStrings([], res), do: res
-  def filterNestedStrings([h | t], res) when is_list(h), do: filterNestedStrings(t, res ++ [filterNestedStrings(h)])
+  def filterNestedStrings([], res), do: Enum.reverse res
+  def filterNestedStrings([h | t], res) when is_list(h), do: filterNestedStrings(t, [filterNestedStrings(h) | res])
   def filterNestedStrings([h | t], res) when is_bitstring(h), do: filterNestedStrings(t, res)
-  def filterNestedStrings([h | t], res), do: filterNestedStrings(t, res ++ [h])
+  def filterNestedStrings([h | t], res), do: filterNestedStrings(t, [h | res])
 
   def tailFib(n), do: tailFib(n, 0, 1)
   def tailFib(0, a, _), do: a
@@ -31,9 +31,9 @@ defmodule Lab4 do
   def tailFib(n, a, b), do: tailFib(n-1, b, a+b)
   
   def giveChange(n, coins), do: giveChange(n, coins, [])
-  def giveChange(0,_,res), do: res
+  def giveChange(0,_,res), do: Enum.reverse res
   def giveChange(_, [], _), do: :error
-  def giveChange(n,[h | t],res) when n >= h, do: giveChange(n-h, [h | t], res ++ [h])
+  def giveChange(n,[h | t],res) when n >= h, do: giveChange(n-h, [h | t], [h | res])
   def giveChange(n, [_ | t], res), do: giveChange(n, t, res)
     
   def reduce([h | t], fun), do: reduce(t, h, fun)
